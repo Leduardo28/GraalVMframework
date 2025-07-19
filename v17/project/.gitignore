@@ -1,33 +1,38 @@
-HELP.md
+# Directorios generados por Maven y el IDE
 target/
-.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
-
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-
-### IntelliJ IDEA ###
-.idea
-*.iws
+out/
+.idea/
 *.iml
 *.ipr
-
-### NetBeans ###
+*.iws
+.vscode/
+.project
+.classpath
+.factorypath
+.settings/
+.sts4-cache/
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
 build/
-!**/src/main/**/build/
-!**/src/test/**/build/
 
-### VS Code ###
-.vscode/
+# Archivos de logs o temporales
+*.log
+*.tmp
+.DS_Store
+
+# Archivos de dependencias de Node.js (si usas frontend)
+node_modules/
+package-lock.json
+package.json # A veces se ignora si solo se usa para scripts de dev, pero si es para dependencias de prod, no se ignora. Por ahora lo dejamos.
+
+# Archivos generados por el traductor (para futuras ejecuciones)
+# Ignora cualquier archivo .c, .js, .py en cualquier subdirectorio
+*.c
+*.js
+*.py
+
+# Excluye la carpeta de salida específica si persiste (por si acaso)
+src/main/java/com/traductor/com/
