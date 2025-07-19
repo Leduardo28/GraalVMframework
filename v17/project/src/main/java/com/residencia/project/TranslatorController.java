@@ -1,24 +1,52 @@
 package com.residencia.project;
 
-import org.springframework.web.bind.annotation.*;
+import com.traductor.Translator; // Asegúrate de que esta importación esté presente
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class TranslatorController {
 
-    @GetMapping("/translate")
-    public String translate(
-        @RequestParam String code,   // Código fuente que se desea traducir
-        @RequestParam String type,   // Tipo de traducción: "direct" o "polyglot"
-        @RequestParam String lp      // Lenguaje de destino: "js", "python", "c"
-    ) {
-        // Imprimir en consola los datos recibidos
-        System.out.println("=== Petición de Traducción ===");
-        System.out.println("Código fuente: " + code);
-        System.out.println("Tipo de traducción: " + type);
-        System.out.println("Lenguaje de destino: " + lp);
-        System.out.println("==============================");
+    // Clase interna para mapear la solicitud JSON entrante
+    static class TranslationRequest {
+        private String code;
+        private String language;
+        private String className; // <-- Nuevo campo para el nombre de la clase
 
-        // Aquí irá la lógica de traducción (por ahora, solo simulamos una respuesta)
-        return "Traducción de tipo " + type + " a " + lp + ":\n\n" + code;
+        // Getters y Setters (Necesarios para que Spring pueda mapear el JSON)
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
+        }
+
+        public String getLanguage() {
+            return language;
+        }
+
+        public void setLanguage(String language) {
+            this.language = language;
+        }
+
+        public String getClassName() { // <-- Getter para className
+            return className;
+        }
+
+        public void setClassName(String className) { // <-- Setter para className
+            this.className = className;
+        }
+    }
+
+    @PostMapping("/translate")
+    public ResponseEntity<String> translateCode(@RequestBody TranslationRequest request) {
+        // Llama al método de traducción, pasando el código, el lenguaje y el nombre de la clase
+        String translatedCode = Translator.translate(request.getCode(), request.getLanguage(), request.getClassName());
+
+        // Devuelve la respuesta HTTP con el código traducido
+        return ResponseEntity.ok(translatedCode);
     }
 }
